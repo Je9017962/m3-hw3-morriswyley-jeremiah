@@ -10,8 +10,13 @@ ul {
 
 body {
     font-family: Arial, sans-serif;
-    background: url('images/pattern.webp') repeat;
+    background: url('images/fancy.png') repeat;
     background-color: #eef1f4;
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 50px;
+    /* reserve space so content never sits under the footer */
+    box-sizing: border-box;
 }
 
 /* Header */
@@ -199,4 +204,8 @@ footer {
     text-align: center;
     padding: 10px;
     clear: both;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
