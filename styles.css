@@ -8,15 +8,22 @@ ul {
     padding: 0;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: url('images/fancy.png') repeat;
     background-color: #eef1f4;
-    position: relative;
     min-height: 100vh;
-    padding-bottom: 50px;
-    /* reserve space so content never sits under the footer */
     box-sizing: border-box;
+    /* Sticky footer: stack header/main/footer vertically and let
+       main absorb any extra space, so footer always sits at the
+       bottom of the viewport (or right after content if content
+       is taller than the viewport). */
+    display: flex;
+    flex-direction: column;
 }
 
 /* Header */
@@ -62,6 +69,7 @@ nav a.active {
 
 /* Layout (CSS floats, no Flexbox) */
 main {
+    flex: 1;
     padding: 20px 30px;
     overflow: hidden;
     /* clearfix so main wraps its floated children */
@@ -204,8 +212,4 @@ footer {
     text-align: center;
     padding: 10px;
     clear: both;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
 }
