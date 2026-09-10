@@ -1,139 +1,257 @@
-<!DOCTYPE html>
-<html lang="en">
+Claude finished the response
+Edited 4 files, read 2 files
+Good catch opportunity — I found a real bug: the .contact-form CSS rule sets display: table, which has higher
+specificity than the browser's default [hidden] { display: none } rule. That means setting contactForm.hidden = true in
+JS won't actually hide the form after submission — it'll silently stay visible on screen alongside the success message.
+Let me fix that:
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeremiah Morris-Wyley Portfolio</title>
-    <link rel="stylesheet" type="text/css" href="styles.css" />
-</head>
+Edited a file, read a file, and 2 more tools
+Done. What changed:
 
-<body>
-    <!-- Header -->
-    <header>
-        <h1>Jeremiah Morris-Wyley</h1>
-        <nav>
-            <ul>
-                <li><a href="#about" class="nav-link active" data-target="about-view">About</a></li>
-                <li><a href="https://jeremiahmwportfolio.my.canva.site/" target="_blank" rel="noopener">Portfolio</a>
-                </li>
-                <li><a href="#contact" class="nav-link" data-target="contact-view">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+Thank-you message: Submitting the form now intercepts the actual submit, hides the form, and shows a green confirmation
+box: "Thank you for your submission! (This form is a test for a school assignment.)" Switching away to About and back to
+Contact resets it so the form reappears for testing again.
 
-    <!-- Main Content -->
-    <main>
+Bug I found and fixed: Your .contact-form CSS rule sets display: table. That has higher specificity than the browser's
+built-in [hidden] { display: none } rule, so when the JS set contactForm.hidden = true to hide the form after
+submission, it would have silently stayed visible — the success message would've just appeared awkwardly underneath it
+instead of replacing it. I added an explicit .contact-form[hidden] { display: none; } rule to force it to actually hide.
 
-        <!-- About Me view -->
-        <section id="about-view" class="page-view about">
-            <img src="images/Headshot.png" alt="Profile Image" class="profile-img">
-            <article>
-                <h2>About Me</h2>
-                <p>I’m Jeremiah Morris‑Wyley, a Digital Media professional passionate about accessible web design, UX,
-                    and public‑sector communication. Since February 2024, I’ve worked as a Technical Support Specialist
-                    for the City of Groveland, where I manage the municipal website, mobile app, and software systems. I
-                    recently earned my B.A. in Digital Media from the University of Central Florida, with a focus on web
-                    design, accessibility, and digital storytelling.</p>
-                <p>Originally from North Carolina and now rooted in Tavares, Florida, I enjoy building inclusive
-                    digital experiences that strengthen community engagement. My career goal is to become a webmaster or
-                    website manager for a county or state agency, continuing to bridge technology and public service.
-                </p>
-            </article>
-        </section>
+Also added while reviewing: a missing
+<meta name="viewport"> tag — without it, mobile browsers render the page at desktop width and then scale it down, making
+text tiny on phones.
 
-        <!-- Contact view -->
-        <section id="contact-view" class="page-view contact-form-section" hidden>
-            <article>
-                <h2>Get In Touch</h2>
-                <p>Have a question, project, or opportunity you'd like to discuss? Fill out the form below and I'll
-                    get back to you as soon as I can.</p>
+I checked the rest of the layout logic (float containment, the About/Contact toggle, nav active-state, label/input
+associations, ID uniqueness) and didn't find anything else broken.
 
-                <form action="https://formspree.io/f/your-form-id" method="POST" class="contact-form" id="contact-form">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
 
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+M3 hw3 morris wyley jeremiah
+ZIP
 
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" name="subject">
+Index
+Code·HTML
 
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="6" required></textarea>
+Styles
+Code·CSS
+does this use flexbox
 
-                    <button type="submit">Send Message</button>
-                </form>
+No — this uses CSS floats for all layout, no Flexbox anywhere. Here's a rundown of styles.css:
 
-                <p id="form-success" class="form-success" hidden>
-                    Thank you for your submission! (This form is a test for a school assignment.)
-                </p>
-            </article>
-        </section>
+Header: h1 floats left, nav floats right, and the nav <li>s float left to sit in a row — overflow: hidden on header
+    clears them.
+    Main layout: .about / .contact-form-section float left at 68% width, .sidebar floats right at 26% width — overflow:
+    hidden on main clears them.
+    Profile image: floats left inside the About text so the paragraph wraps around it, with clear: left on the last
+    paragraph to stop the wrap.
+    Footer: clear: both to sit below the floated content.
+    The only other layout-adjacent property is display: table on .contact-form (just to stack the form fields), and
+    display: block on the form labels — neither of those is Flexbox either.
 
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <h2>Connect with Me</h2>
-            <a href="https://stackoverflow.com" target="_blank" rel="noopener">
-                <img src="images/soverflow.png" alt="Stack Overflow">
-            </a>
-            <a href="https://www.linkedin.com/in/jeremiahmw/" target="_blank" rel="noopener">
-                <img src="images/linkedin.png" alt="LinkedIn">
-            </a>
-            <a href="https://github.com/Je9017962" target="_blank" rel="noopener">
-                <img src="images/git.png" alt="GitHub">
-            </a>
-        </aside>
-    </main>
+    So the whole thing satisfies the "no Flexbox" requirement for your assignment.
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Jeremiah Morris-Wyley</p>
-    </footer>
+    p6.webp
+    add this pattern in the background of the main site.
 
-    <script>
-        // Toggle between the About and Contact views without leaving the page
-        const navLinks = document.querySelectorAll('.nav-link');
-        const pageViews = document.querySelectorAll('.page-view');
-        const contactForm = document.getElementById('contact-form');
-        const formSuccess = document.getElementById('form-success');
+    Ran 4 commands, read a file, and 2 more tools
+    Swapped in your uploaded pattern (p6.webp — a tiny 8×8 subtle light-gray texture tile) as the site's background.
+    It's now saved as images/pattern.webp, and styles.css points to it instead of the placeholder pattern I'd generated
+    earlier. It'll tile seamlessly behind the header/main/footer just like before, just with your chosen texture now.
 
-        function showView(targetId) {
-            pageViews.forEach(view => {
-                view.hidden = view.id !== targetId;
-            });
+
+    M3 hw3 morris wyley jeremiah
+    ZIP
+
+    Styles
+    Code·CSS
+    add it to the index page
+
+    Read a file
+    It's already wired in — index.html links to styles.css via
+    <link rel="stylesheet" href="styles.css" />, and styles.css sets the body background to url('images/pattern.webp').
+    Since the pattern is a body-level background, it automatically applies across the whole page (header, main, footer)
+    — there's nothing extra needed in index.html itself for it to show up.
+
+    That said, here are your current files together so you can confirm it renders as expected:
+
+    Presented 3 files
+    If it's still not showing up when you open index.html on your end, the most common culprit is the
+    images/pattern.webp file not being in the same relative location as styles.css expects — make sure your folder
+    structure looks exactly like this:
+
+    your-repo/
+    ├── index.html
+    ├── styles.css
+    └── images/
+    ├── Headshot.png
+    ├── git.png
+    ├── linkedin.png
+    ├── soverflow.png
+    └── pattern.webp
+    If you unzip the file I shared, this structure is already set up correctly. Let me know if you're seeing something
+    different on your end (blank background, broken image icon, etc.) and I can help debug further.
+
+
+    M3 hw3 morris wyley jeremiah
+    ZIP
+
+    Index
+    Code·HTML
+
+    Styles
+    Code·CSS
+
+    Claude works directly with your codebase
+
+    Write a message…
+
+
+    Claude is AI and can make mistakes.
+
+
+    Index · HTML
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Jeremiah Morris-Wyley Portfolio</title>
+        <link rel="stylesheet" type="text/css" href="styles.css" />
+    </head>
+
+    <body>
+        <!-- Header -->
+        <header>
+            <h1>Jeremiah Morris-Wyley</h1>
+            <nav>
+                <ul>
+                    <li><a href="#about" class="nav-link active" data-target="about-view">About</a></li>
+                    <li><a href="https://jeremiahmwportfolio.my.canva.site/" target="_blank"
+                            rel="noopener">Portfolio</a></li>
+                    <li><a href="#contact" class="nav-link" data-target="contact-view">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+
+            <!-- About Me view -->
+            <section id="about-view" class="page-view about">
+                <img src="images/Headshot.png" alt="Profile Image" class="profile-img">
+                <article>
+                    <h2>About Me</h2>
+                    <p>I’m Jeremiah Morris‑Wyley, a Digital Media professional passionate about accessible web design,
+                        UX,
+                        and public‑sector communication. Since February 2024, I’ve worked as a Technical Support
+                        Specialist
+                        for the City of Groveland, where I manage the municipal website, mobile app, and software
+                        systems. I
+                        recently earned my B.A. in Digital Media from the University of Central Florida, with a focus on
+                        web
+                        design, accessibility, and digital storytelling.</p>
+                    <p>Originally from North Carolina and now rooted in Tavares, Florida, I enjoy building inclusive
+                        digital experiences that strengthen community engagement. My career goal is to become a
+                        webmaster or
+                        website manager for a county or state agency, continuing to bridge technology and public
+                        service.
+                    </p>
+                </article>
+            </section>
+
+            <!-- Contact view -->
+            <section id="contact-view" class="page-view contact-form-section" hidden>
+                <article>
+                    <h2>Get In Touch</h2>
+                    <p>Have a question, project, or opportunity you'd like to discuss? Fill out the form below and I'll
+                        get back to you as soon as I can.</p>
+
+                    <form action="https://formspree.io/f/your-form-id" method="POST" class="contact-form"
+                        id="contact-form">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject">
+
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+
+                        <button type="submit">Send Message</button>
+                    </form>
+
+                    <p id="form-success" class="form-success" hidden>
+                        Thank you for your submission! (This form is a test for a school assignment.)
+                    </p>
+                </article>
+            </section>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <h2>Connect with Me</h2>
+                <a href="https://stackoverflow.com" target="_blank" rel="noopener">
+                    <img src="images/soverflow.png" alt="Stack Overflow">
+                </a>
+                <a href="https://www.linkedin.com/in/jeremiahmw/" target="_blank" rel="noopener">
+                    <img src="images/linkedin.png" alt="LinkedIn">
+                </a>
+                <a href="https://github.com/Je9017962" target="_blank" rel="noopener">
+                    <img src="images/git.png" alt="GitHub">
+                </a>
+            </aside>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 Jeremiah Morris-Wyley</p>
+        </footer>
+
+        <script>
+            // Toggle between the About and Contact views without leaving the page
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pageViews = document.querySelectorAll('.page-view');
+            const contactForm = document.getElementById('contact-form');
+            const formSuccess = document.getElementById('form-success');
+
+            function showView(targetId) {
+                pageViews.forEach(view => {
+                    view.hidden = view.id !== targetId;
+                });
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.dataset.target === targetId);
+                });
+
+                // Reset the contact form back to its default state each time it's opened
+                if (targetId === 'contact-view') {
+                    contactForm.hidden = false;
+                    formSuccess.hidden = true;
+                }
+            }
+
             navLinks.forEach(link => {
-                link.classList.toggle('active', link.dataset.target === targetId);
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showView(link.dataset.target);
+                });
             });
 
-            // Reset the contact form back to its default state each time it's opened
-            if (targetId === 'contact-view') {
-                contactForm.hidden = false;
-                formSuccess.hidden = true;
-            }
-        }
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
+            // Show a thank-you message instead of actually submitting the form
+            contactForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                showView(link.dataset.target);
+                contactForm.hidden = true;
+                formSuccess.hidden = false;
             });
-        });
 
-        // Show a thank-you message instead of actually submitting the form
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            contactForm.hidden = true;
-            formSuccess.hidden = false;
-        });
+            // Support direct linking via URL hash (e.g. index.html#contact)
+            window.addEventListener('DOMContentLoaded', () => {
+                if (window.location.hash === '#contact') {
+                    showView('contact-view');
+                }
+            });
+        </script>
+    </body>
 
-        // Support direct linking via URL hash (e.g. index.html#contact)
-        window.addEventListener('DOMContentLoaded', () => {
-            if (window.location.hash === '#contact') {
-                showView('contact-view');
-            }
-        });
-    </script>
-</body>
-
-</html>
+    </html>
